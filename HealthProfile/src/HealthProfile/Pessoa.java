@@ -3,6 +3,7 @@ package HealthProfile;
 import java.util.Calendar;
 
 public class Pessoa {
+	private double IMC;
 	private String nome;
 	private String sobreNome;
 	private int mesNascimento;
@@ -11,16 +12,32 @@ public class Pessoa {
 	private int idade;
 	private double peso;
 	private double altura;
+	private int freqCardicacamax;
+	private int freqCardiacaAlvo1;
+	private int freqcaidiacaAlvo2;
+
 	/**
-	 * @param nome nome da pessoa
-	 * @param sobrenome sobrenome da pessoa			
-	 * @param mesNascimento Mês nascimento da pessoa
-	 * @param 	anoNascimento Ano de nascimento da pessoa
-	 * @param diaNascimento Dia de nascimento da pessoa
-	 * @param idade idade da pessoa após o calculo através da data de nascimento
-	 * @param  peso Peso da pessoa
-	 * @param Altura da pessoa
+	 * * @param freqCardiacamax mostra o calculo da frequencia cardicaca maxima
+	 * de uma pessoa * @param IMC massa corporal da pessoa
+	 * 
+	 * @param nome
+	 *            nome da pessoa
+	 * @param sobrenome
+	 *            sobrenome da pessoa
+	 * @param mesNascimento
+	 *            MÃªs nascimento da pessoa
+	 * @param anoNascimento
+	 *            Ano de nascimento da pessoa
+	 * @param diaNascimento
+	 *            Dia de nascimento da pessoa
+	 * @param idade
+	 *            idade da pessoa apÃ³s o calculo atravÃ©s da data de nascimento
+	 * @param peso
+	 *            Peso da pessoa
+	 * @param Altura
+	 *            da pessoa
 	 */
+
 
 	public Pessoa(String nome, String sobreNome, int diaNascimento,
 		  int mesNasciemnto,int anoNascimento, double peso, double altura) {
@@ -32,7 +49,74 @@ public class Pessoa {
 		this.altura = altura;
 		this.peso = peso;
 	}
+	
+	/**
+	 * 
+	 * Metodo que faz perfil de Saude de uma pessoa
+	 */
 
+	
+	public void registroSaude() {
+		this.calculoIdade(diaNascimento, mesNascimento, anoNascimnento);
+		this.CalculoFreqCardiaca();
+		this.CalculoImC();
+		this.imprimeDados();
+
+	}
+	/**
+	 * 
+	 * Metodo que faz o calculo de massa corporal de uma pessoa
+	 */
+
+	public void CalculoImC() {
+		this.IMC = this.peso / (this.altura * this.altura);
+		if (IMC < 18.5) {
+			System.out.println("Sob peso");
+
+		}
+		if (IMC > 18.5 && IMC < 24.9) {
+			System.out.println("Peso Normal " + this.peso + "Kg");
+		}
+		if (IMC > 25 && IMC < 29.9) {
+			System.out.println("Acima do peso " + this.peso + "Kg");
+		}
+		if (IMC > 30) {
+			System.out.println("Obeso");
+		}
+
+	}
+
+
+
+	
+/**
+ * 
+ * Metodo que faz o calculo da idade, atravï¿½s da data de nascimento
+ */
+	public void calculoIdade(int dia, int mes, int ano) {
+		Calendar dataAtual = Calendar.getInstance();
+		Calendar dataNasc = Calendar.getInstance();
+		dataNasc.set(ano, mes, dia);
+		int anoNasc = dataNasc.get(Calendar.YEAR);
+		int anoAtual = dataAtual.get(Calendar.YEAR);
+		this.idade = anoAtual - anoNasc;
+
+	}
+	/**
+	 * 
+	 * Metodo que faz o calculo frequÃªncia cardÃ­aca da pessoa
+	 */
+
+	
+	
+/**
+ * Metdodo que faz impressï¿½o dos dados da pessoa
+ */
+	public void imprimeDados() {
+		System.out.println("Nome " + nome + " " + sobreNome);
+		System.out.println("Idade " + idade);
+	}
+	
 	public double getPeso() {
 		return peso;
 	}
@@ -47,43 +131,6 @@ public class Pessoa {
 
 	public void setAltura(double altura) {
 		this.altura = altura;
-	}
-/**
- * 
- * Metodo que faz o calculo da idade, através da data de nascimento
- */
-	public void calculoIdade(int dia, int mes, int ano) {
-		Calendar dataAtual = Calendar.getInstance();
-		Calendar dataNasc = Calendar.getInstance();
-		dataNasc.set(ano, mes, dia);
-		int anoNasc = dataNasc.get(Calendar.YEAR);
-		int anoAtual = dataAtual.get(Calendar.YEAR);
-		this.idade = anoAtual - anoNasc;
-
-	}
-	/**
-	 * 
-	 * Metodo que faz perfil de Saude de uma pessoa
-	 */
-
-	public void registroSaude() {
-		Pessoa p = new Pessoa(nome, sobreNome, diaNascimento,anoNascimnento,mesNascimento,  peso, altura);
-		p.calculoIdade(diaNascimento, mesNascimento, anoNascimnento);
-		CalculoFrequenciaCardiaca calc= new CalculoFrequenciaCardiaca(p);
-		calc.CalculoFreqCardiaca();
-		CalculoIndiceMassaCorporal 	massa= new CalculoIndiceMassaCorporal(p,calc);
-		massa.CalculoImC();
-		massa.imprimeDados();
-		
-	}
-/**
- * Metdodo que faz impressão dos dados da pessoa
- */
-	public void imprimeDados() {
-		System.out.println("Nome " + nome + " " + sobreNome);
-		System.out.println("Idade " + idade);
-		System.out.println("Data de nascimento : " + diaNascimento + "/"
-				+ mesNascimento + "/" + anoNascimnento);
 	}
 
 	public String getNome() {
