@@ -93,19 +93,40 @@ public class Pessoa {
  * 
  * Metodo que faz o calculo da idade, atrav�s da data de nascimento
  */
-	public void calculoIdade(int dia, int mes, int ano) {
+public void calculoIdade(int dia, int mes, int ano) {
 		Calendar dataAtual = Calendar.getInstance();
 		Calendar dataNasc = Calendar.getInstance();
 		dataNasc.set(ano, mes, dia);
 		int anoNasc = dataNasc.get(Calendar.YEAR);
 		int anoAtual = dataAtual.get(Calendar.YEAR);
-		this.idade = anoAtual - anoNasc;
+		if (dataNasc.get(Calendar.MONTH) == dataAtual.get(Calendar.MONTH)) {
+			if (dataNasc.get(Calendar.DAY_OF_MONTH) >= dataAtual
+					.get(Calendar.DAY_OF_MONTH)) {
+				this.idade = anoAtual - anoNasc;
+			}
+		} else {
+			this.idade = anoAtual - anoNasc;
+			this.idade = idade - 1;
+		}
 
 	}
 	/**
 	 * 
 	 * Metodo que faz o calculo frequência cardíaca da pessoa
 	 */
+	 
+	 public void CalculoFreqCardiaca() {
+		this.freqCardicacamax = 220 - this.idade;
+		this.setFreqCardiacaAlvo1(freqCardicacamax * 50 / 100);
+		this.setFreqcaidiacaAlvo2(freqCardicacamax * 65 / 100);
+		System.out
+				.println("Sua frequência cardíaca máxima durante o exercíco é: "
+						+ freqCardicacamax);
+		System.out.println("Sua frequência cardíaca  alvo esta entre "
+				+ freqCardiacaAlvo1 + " e " + freqcaidiacaAlvo2 + " bpm");
+
+	}
+
 
 	
 	
